@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+        #c1{
+            border: 2px solid red;
+        }
+    </style>
+<body>
+    <canvas id="c1" width="500" height="500"></canvas>
+    <script>
+
+
+// /**@type {HTMLCanvasElement}*/
+var canvas = document.getElementById("c1");
+var ctx = canvas.getContext("2d");
+
+class polygon {
+  constructor(name) {
+    if (this.constructor === polygon) {
+      throw new Error("Abstract class");
+    }
+    this.name = name;
+  }
+}
+
+class triangle extends polygon {
+  constructor(width, height) {
+    super("triangle");
+    this.width = width;
+    this.height = height;
+  }
+  area() {
+    return (1/2)*this.width * this.height;
+  }
+  toString() {
+    return ` Area of ${this.name} is ${this.area()} with parameters { Width = ${this.width} , Height = ${this.height}}`;
+  }
+  draw() {
+    // ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.beginPath();
+    ctx.moveTo(200 , 200);
+    ctx.lineTo(200 + this.width, 200);
+    ctx.lineTo(200, 200-this.height);
+    ctx.closePath();
+    ctx.strokeStyle = "red"
+    ctx.stroke();
+  }
+}
+
+
+class circle extends polygon {
+  constructor(radius) {
+    super("Circle");
+    this.radius = radius;
+  }
+  area() {
+    return Math.PI * this.radius * this.radius;
+  }
+  toString() {
+    return ` Area of ${this.name} is ${this.area()} with parameters radius = ${this.radius}`;
+  }
+  draw() {
+    //   ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.beginPath();
+      ctx.fillStyle = "red";
+      ctx.arc(canvas.width / 2, canvas.height / 2, this.radius, 0, 2 * Math.PI);
+      ctx.fill()
+  }
+}
+
+class rectangle extends polygon {
+  constructor(width, height) {
+    super("Rectangle");
+    this.width = width;
+    this.height = height;
+  }
+  area() {
+    return this.width * this.height;
+  }
+  toString() {
+    return ` Area of ${this.name} is ${this.area()} with parameters { Width = ${this.width} , Height = ${this.height}}`;
+  }
+  draw() {
+    // ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.beginPath();
+    ctx.fillStyle = "red"
+    ctx.fillRect(canvas.width / 2, canvas.height / 2, this.width, this.height);
+  }
+}
+
+class square extends rectangle {
+  constructor(side) {
+    super(side,side);
+  }
+  area() {
+    return this.width * this.height;
+  }
+  toString() {
+    return ` Area of ${this.name} is ${this.area()} with parameters { side = ${this.width} }`;
+  }
+  draw() {
+    // ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.beginPath();
+    ctx.fillStyle = "red";
+    ctx.fillRect(canvas.width / 2, canvas.height / 2, this.width, this.height);
+  }
+}
+
+var ci = new circle(70);
+console.log(ci.toString());
+ci.draw();
+
+var re = new rectangle(150,90);
+console.log(re.toString());
+re.draw();
+
+var sq = new square(50);
+console.log(sq.toString());
+sq.draw();
+
+var tr = new triangle(100,100);
+console.log(tr.toString());
+tr.draw();
+        
+    </script>
+</body>
+</html>
